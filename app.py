@@ -103,12 +103,16 @@ def clean_data(**kwargs):
             if player_count == player_per_team: break
             if player in check_roster: continue
             if stats['experience'] == 'YES' and num_experience < 3:
+                stats['experience'] = True
+                stats['height'] = int(stats['height'].split(' ')[0])
                 player_stats.append(stats)
                 num_experience += 1
                 player_count += 1
                 max_roster += 1
                 check_roster.update({player:stats})
             elif stats['experience'] == 'NO' and num_inexperience < 3:
+                stats['experience'] = False
+                stats['height'] = int(stats['height'].split(' ')[0])
                 player_stats.append(stats)
                 num_inexperience += 1
                 player_count += 1
@@ -136,7 +140,7 @@ def display_team_members(team_dirs, view_team, team):
     [names.append(value['name']) for value in players]
     [guardians.append(value['guardians']) for value in players]
     guardians = ', '.join(guardians).replace(' and ', ', ')
-    [heights.append(int(value['height'].replace('inches', ''))) for value in players]
+    [heights.append(value['height'] for value in players]
     [experience.append(value['experience']) for value in players]
 
     for player_heights in heights:
@@ -144,9 +148,9 @@ def display_team_members(team_dirs, view_team, team):
     avg_team_heights =  sum_player_heights/len(heights)
 
     for player_experience in experience:
-        if player_experience == 'YES':
+        if player_experience == True:
             num_experience += 1
-        elif player_experience == 'NO':
+        elif player_experience == False:
             num_inexperience += 1
     
     print(f'Number of Player: {len(names)}','\n', 'Number of experience players: ', num_experience,'\n', 'Number of inexperience players: ', num_inexperience,'\n\n' 'Players on the team: \n', ', '.join(names), '\n')
