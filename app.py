@@ -140,7 +140,7 @@ def display_team_members(team_dirs, view_team, team):
     [names.append(value['name']) for value in players]
     [guardians.append(value['guardians']) for value in players]
     guardians = ', '.join(guardians).replace(' and ', ', ')
-    [heights.append(value['height'] for value in players]
+    [heights.append(value['height']) for value in players]
     [experience.append(value['experience']) for value in players]
 
     for player_heights in heights:
